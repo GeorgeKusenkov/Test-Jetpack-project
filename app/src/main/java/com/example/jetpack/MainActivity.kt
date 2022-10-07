@@ -13,42 +13,29 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                ListItem("Dude 1", "Android Dev")
-                ListItem("Dude 2", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
-                ListItem("Dude 3", "Android Dev")
+            Box(modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircleItem()
             }
 
         }
@@ -57,15 +44,42 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
+private fun CircleItem() {
+    val count = remember {
+        mutableStateOf(0)
+    }
+    val color = remember {
+        mutableStateOf(Color.Blue)
+    }
+
+    Box(modifier = Modifier
+        .size(100.dp)
+        .background(color = color.value, shape = CircleShape)
+        .clickable {
+
+            when(++count.value) {
+                10 -> color.value = Color.Red
+                20 -> color.value = Color.Cyan
+            }
+        },
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = count.value.toString(), style = TextStyle(color = Color.White), fontSize = 20.sp)
+    }
+}
+
+@Composable
 private fun ListItem(name: String, profession: String) {
+    var count = remember {
+        mutableStateOf(0)
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
-            .pointerInput(Unit) {
-                detectTapGestures{
-                    Log.d("test_msg", "Long press: $it")
-                }
+            .clickable {
+                count.value++
             },
         shape = RoundedCornerShape(15.dp),
         elevation = 5.dp
@@ -84,7 +98,7 @@ private fun ListItem(name: String, profession: String) {
                 )
                 
                 Column() {
-                    Text(text = name)
+                    Text(text = count.value.toString())
                     Text(text = profession)
                 }
 
