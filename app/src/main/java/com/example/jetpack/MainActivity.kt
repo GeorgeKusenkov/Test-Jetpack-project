@@ -26,20 +26,20 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            LazyRow(
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Purple200)
             ) {
                 itemsIndexed(
                     listOf(
-                        ItemRowModel(R.drawable.ic_launcher_background, "Text1"),
-                        ItemRowModel(R.drawable.ic_launcher_background, "Text2"),
-                        ItemRowModel(R.drawable.ic_launcher_background, "Text3"),
-                        ItemRowModel(R.drawable.ic_launcher_background, "Text4"),
-                        ItemRowModel(R.drawable.ic_launcher_background, "Text5"),
-                        ItemRowModel(R.drawable.ic_launcher_background, "Text6"),
-                        ItemRowModel(R.drawable.ic_launcher_background, "Text7"),
+                        ItemRowModel(R.drawable.ic_launcher_background, "Text1", getString(R.string.text1) ),
+                        ItemRowModel(R.drawable.ic_launcher_background, "Text2", getString(R.string.text2)),
+                        ItemRowModel(R.drawable.ic_launcher_background, "Text3", getString(R.string.text3)),
+                        ItemRowModel(R.drawable.ic_launcher_background, "Text4", getString(R.string.text4)),
+                        ItemRowModel(R.drawable.ic_launcher_background, "Text5", getString(R.string.text5)),
+                        ItemRowModel(R.drawable.ic_launcher_background, "Text6", getString(R.string.text6)),
+                        ItemRowModel(R.drawable.ic_launcher_background, "Text7", getString(R.string.text7))
                     )
                 ) { _, item ->
                     MyRow(item = item)
